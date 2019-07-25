@@ -1,0 +1,140 @@
+
+create table law(
+	idlaw INT PRIMARY KEY,
+	law VARCHAR(255),
+	Sanction TEXT
+	
+
+	
+);
+CREATE TABLE Narcotic(
+	idNarcotic INT PRIMARY KEY,
+	DrugName VARCHAR(45),
+	Effect TEXT
+
+
+);
+create table Prostitution(
+	idProstitution INT PRIMARY KEY,
+	Establishment VARCHAR(45)
+
+
+);
+create table Tourist(
+	touristIP VARCHAR(45) PRIMARY KEY,
+	country VARCHAR(45),
+	city VARCHAR(45)
+);
+CREATE TABLE Professional(
+	idProfessional INT PRIMARY KEY,
+	Username VARCHAR(45),
+	password varchar(45),
+	form_of_profession varchar(45),
+	last_name VARCHAR(45),
+	first_name varchar(45)
+
+);
+create table visit(
+	idVisit INT PRIMARY KEY,
+	pageName INT,
+	date_time DATETIME
+	
+
+);
+create table person(
+	idProfessional INT,
+	touristIP VARCHAR(45),
+	idVisit INT
+
+
+);
+create table Activity(
+	-- idActivity INT,
+	idNarcotic INT,
+	idProstitution INT,
+	idLaw INT,
+	pageName INT PRIMARY KEY
+);
+
+-- foreign keys
+
+ALTER TABLE activity
+	ADD CONSTRAINT fk_activityidLaw FOREIGN KEY (idLaw) REFERENCES law(idLaw);
+ALTER TABLE activity
+	ADD CONSTRAINT fk_activityidprostitution FOREIGN KEY (idProstitution) REFERENCES Prostitution(idProstitution);
+ALTER TABLE activity
+	ADD CONSTRAINT fk_activityidNarcotic FOREIGN KEY (idNarcotic) REFERENCES Narcotic(idNarcotic);
+ALTER TABLE visit
+	ADD CONSTRAINT fk_visitpageName FOREIGN KEY (pageName) REFERENCES activity(pageName);
+ALTER TABLE person
+	ADD CONSTRAINT fk_personprofessional FOREIGN KEY (idProfessional) REFERENCES professional(idProfessional);
+ALTER TABLE person
+	ADD CONSTRAINT fk_persontourist FOREIGN KEY (TouristIP) REFERENCES tourist(touristIP);
+ALTER TABLE person
+	ADD CONSTRAINT fk_personvisit FOREIGN KEY (idVisit) REFERENCES visit(idVisit);
+
+-- indexes
+CREATE INDEX activityidLaw_index
+	ON activity(idLaw);
+CREATE INDEX activityidprostitution_index
+	ON activity(idProstitution);
+CREATE INDEX activityidNarcotic_index
+	ON activity(idNarcotic);
+CREATE INDEX visitpageName_index
+	ON visit(pageName);
+CREATE INDEX personprofessional_index
+	ON person(idProfessional);
+CREATE INDEX persontourist_index
+	ON person(touristIP);
+CREATE INDEX personvisit_index
+	ON person(idVisit);
+
+-- data input 
+
+INSERT INTO narcotic VALUES(1,"Marijuana",
+				"when you consume marijuana or inhale the smoke of it, the drug will 
+				make you feel high. Common effects of the drug are feeling happy, relaxed, scared,  
+				silly and/or tired.  You will not be able to think clearly and experience getting 
+				very hungry after consuming it.
+				is a drug made from the cannabis sativa plant. It looks like a green or gray mixture
+				 of shredded, dry flowers and leaves."
+);
+INSERT INTO narcotic VALUES(2,"Hash",
+				"when you consume hash you will be in a high feeling for an average of 3 hours. 
+				Effects are that you will feel a feeling of peace, experience a sensory experience, 
+				your mood will be elevated and stress will be reduced
+				 is a drug made from the cannabis resin plant. Hash is compressed into sticks, blocks 
+				or balls. It is often dry, hard, usually brown and sometimes dark yellow. It gets soft 
+				under high temperature."
+);
+
+INSERT INTO law VALUES(1,"The Dutch Opium Law",
+			" the law that describes what the rules are when it comes to narcotics in the Netherlands.
+			 It exists of two lists. List one is about the drugs that have an unacceptable risk and are not allowed to be consumed, 
+			possessed, produced or sold and list two is about the drugs that have an acceptable risk and are allowed to be consumed. 
+			It stays the same for list two when it comes to possessing the acceptable drugs, producing it or selling it all is not allowed.
+			 You will find hard drugs as cocaine, XTC, heroine etc. on the first list and soft drugs like hash and marijuana on the second list. 
+			The law describes what the consequences are when making a mistake and it focuses on counteracting smuggling and production.
+		   	As a tourist you are not allowed to use hard drugs or sell, export or produce soft drugs in the Netherlands. Coffee shops are 
+			not allowed to sell you more than 5 gram of any soft drug per day."
+);
+INSERT INTO law VALUES(2,"legal forms of prostitution in the Netherlands",
+			"<br>1. Private clubs <br>
+			2. Private houses, like sex clubs with a bar <br>
+			3. Window prostitution <br>
+			4. Escort agencies <br>
+			The Dutch are mainly focused on maintaining a safe, healthy, independent and hygienic working environment for sex workers. 
+			In order to assure that they have asked all business active in the sex industry in Amsterdam to apply for a new licence. They 
+			would only receive a license if they can assure compliancy with the above mentioned conditions.	Prostitution is illegal when it 
+			takes place in a private residence with multiple sex workers being employed there, when it happens during a massage or when you 
+			receive an escort from an illegal agency.  As a tourist you need to know when an activity or service is illegal, otherwise you will
+			 be seen as an accomplice in the illegal scene.
+
+
+");
+
+
+INSERT INTO professional VALUES(1,"user1","password1","Doctor","","");
+INSERT INTO professional VALUES(2,"user2","password2","Policy maker","","");
+INSERT INTO professional VALUES(3,"admin","inholland","Admin","","");
+
